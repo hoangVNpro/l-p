@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1K50</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #0f2027 0%, #203a43 30%, #2c5364 60%, #87ceeb 100%);
+            background-size: 100% 200%;
+            animation: skyShift 20s ease infinite;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            cursor: none !important; /* Ẩn con trỏ mặc định */
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.06) 0%, transparent 30%),
+                radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
+            pointer-events: none;
+            z-index: 1;
+            animation: cloudsMove 30s ease-in-out infinite;
+        }
+
+        @keyframes cloudsMove {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(50px); }
+        }
+
+        @keyframes skyShift {
+            0%, 100% { background-position: 50% 0%; }
+            50% { background-position: 50% 100%; }
+        }
+
+        /* Custom cursor - Heart cursor */
+        .heart-cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+            z-index: 999999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
+            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8));
+            font-size: 40px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        .heart-cursor::before {
+            content: '❤️';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            25% { transform: translate(-50%, -50%) scale(1.1); }
+            50% { transform: translate(-50%, -50%) scale(1); }
+            75% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        /* Cursor trail effects */
+        .cursor-trail {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ff4757 0%, transparent 70%);
+            animation: trailFade 0.6s ease-out forwards;
+        }
+
+        @keyframes trailFade {
+            0% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0);
+            }
+        }
+
+        /* Sparkle effect */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99998;
+            font-size: 16px;
+            opacity: 0;
+            animation: sparkleFloat 1s ease-out forwards;
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(calc(-50% + 50px), calc(-50% - 100px)) scale(0.2) rotate(180deg);
+            }
+        }
+
+        /* Particle effect */
+        .particle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            pointer-events: none;
+            z-index: 99997;
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleExplode 1s ease-out forwards;
+        }
+
+        @keyframes particleExplode {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(
+                    calc(-50% + var(--tx, 0px)),
+                    calc(-50% + var(--ty, 0px))
+                ) scale(0.1);
+            }
+        }
+
+        /* Magic trail effect */
+        .magic-trail {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            pointer-events: none;
+            z-index: 99996;
+            opacity: 0;
+            background: conic-gradient(
+                from 0deg,
+                #ff6b6b,
+                #ffa726,
+                #ffee58,
+                #66bb6a,
+                #42a5f5,
+                #5c6bc0,
+                #ff6b6b
+            );
+            border-radius: 50%;
+            animation: magicSpin 1s ease-out forwards;
+            filter: blur(5px);
+        }
+
+        @keyframes magicSpin {
+            0% {
+                opacity: 0.7;
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(2) rotate(360deg);
+            }
+        }
+
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 0.5em;
+            pointer-events: none;
+            z-index: 9999;
+            animation: fall linear infinite;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+            opacity: 0.8;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(100vh) translateX(30px) rotate(360deg); opacity: 0.3; }
+        }
+
+        .star {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        /* Drawer Styles */
+        .drawer-toggle {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            z-index: 1000;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: none !important;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.5);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drawer-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.7);
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .drawer {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 350px;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 255, 0.98) 100%);
+            z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            overflow-y: auto;
+        }
+
+        .drawer.active {
+            transform: translateX(0);
+        }
+
+        .drawer-header {
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .drawer-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            border: none;
+        }
+
+        .drawer-close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: none !important;
+            transition: all 0.3s ease;
+        }
+
+        .drawer-close:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: rotate(90deg);
+        }
+
+        .search-box {
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: white;
+            cursor: text;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .drawer-nav {
+            padding: 20px 0;
+        }
+
+        .drawer-nav a {
+            display: block;
+            padding: 15px 25px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            font-weight: 500;
+        }
+
+        .drawer-nav a:hover {
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.1), transparent);
+            border-left-color: #667eea;
+            color: #667eea;
+            padding-left: 35px;
+        }
+
+        .drawer-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #667eea, transparent);
+            margin: 15px 0;
+        }
+
+        .drawer-section {
+            padding: 20px;
+        }
+
+        .drawer-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .drawer-item {
+            padding: 10px 0;
+            color: #666;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .drawer-item:hover {
+            color: #667eea;
+            padding-left: 10px;
+        }
+
+        .drawer-footer {
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            font-size: 0.85em;
+            border-top: 1px solid #eee;
+            margin-top: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 20px;
+            color: white;
+            animation: fadeIn 1s ease-in;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        .class-logo {
+            width: 150px;
+            height: 150px;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+        }
+
+        .class-logo:hover {
+            transform: scale(1.15) rotate(5deg);
+            filter: drop-shadow(0 15px 40px rgba(255,255,255,0.5));
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 1.2em;
+        }
+
+        header h1 .typing-text {
+            border-right: 3px solid white;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { border-color: white; }
+            50%, 100% { border-color: transparent; }
+        }
+
+        header h1:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 20px rgba(255,255,255,0.5), 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header .subtitle {
+            font-size: 1.5em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        header .intro {
+            font-size: 1.1em;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.85;
+        }
+
+        section {
+            background: white;
+            margin: 40px 0;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            animation: slideUp 0.8s ease-out;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        section:hover::before {
+            left: 100%;
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: #764ba2;
+            transition: width 0.4s ease;
+        }
+
+        h2:hover::after {
+            width: 100%;
+        }
+
+        .about-content {
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .project-card {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+            background: linear-gradient(145deg, #fff, #f8f9ff);
+        }
+
+        .project-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-card:hover h3 {
+            transform: translateX(5px);
+            color: #764ba2;
+        }
+
+        .project-card p {
+            color: #666;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .project-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .project-link:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px) scale(1.1) rotate(2deg);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
+        }
+
+        .contact {
+            text-align: center;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-size: 1.1em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-5px) scale(1.15);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+
+            section {
+                padding: 30px 20px;
+            }
+
+            h2 {
+                font-size: 2em;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .drawer {
+                width: 280px;
+            }
+            
+            .heart-cursor {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Heart Cursor -->
+    <div class="heart-cursor" id="heartCursor"></div>
+
+    <!-- Drawer Toggle Button -->
+    <button class="drawer-toggle" id="drawerToggle">☰</button>
+
+    <!-- Drawer Overlay -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+
+    <!-- Drawer -->
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">
+            <button class="drawer-close" id="drawerClose">✕</button>
+            <h3>A1K50</h3>
+            <p style="font-size: 0.9em; opacity: 0.9;"></p>
+        </div>
+
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="Tìm kiếm...">
+        </div>
+
+        <!-- <nav class="drawer-nav">
+            <a href="#about">Về Lớp</a>
+            <a href="#projects">Ban Cán Sự</a>
+            <a href="#skills">Hoạt Động</a>
+            <a href="#contact">Liên Hệ</a>
+        </nav>
+
+        <div class="drawer-divider"></div>
+
+        <div class="drawer-section">
+            <h3>📚 Thông Tin Lớp</h3>
+            <div class="drawer-item" onclick="alert('Chuyên đề học: Phát triển bản thân')">Chuyên đề học</div>
+            <div class="drawer-item" onclick="alert('Thời khóa biểu: T2-T6 hàng tuần')">Thời khóa biểu</div>
+            <div class="drawer-item" onclick="alert('Địa điểm: Trường THPT A1K50')">Địa điểm học</div>
+        </div>
+
+        <div class="drawer-section">
+            <h3>👥 Số Thành Viên</h3>
+            <div class="drawer-item">
+                <strong>Tổng: 50 học sinh</strong>
+            </div>
+            <div class="drawer-item">Nam: 25 | Nữ: 25</div>
+        </div> -->
+
+        <div class="drawer-divider"></div>
+
+        <div class="drawer-footer">
+            <p>A1K50</p>
+            <p style="margin-top: 10px; font-size: 0.8em;">Một lớp học đoàn kết</p>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <img src="https://i.ibb.co/Y7GtK2TT/Screenshot-2025-12-03-185330.png" alt="A1K50 Logo" class="class-logo">
+            </div>
+            <h1><span class="typing-text"></span></h1>
+            <p class="subtitle">Chào mừng đến với A1K50</p>
+            <p class="intro">Chúng tôi là một tập thể luôn đoàn kết, tôn trọng và hỗ trợ lẫn nhau trong học tập cũng như cuộc sống</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="about">
+            <h2>Về Lớp Chúng Mình</h2>
+            <div class="about-content">
+                <p>....</p>
+                <br>
+                <p></p>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Ban Cán Sự Lớp</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Nguyễn Thiện Nhân</h3>
+                    <p>Lớp trưởng của lớp A1K50. Là người gương mẫu, có nhiều đóng góp cho lớp và luôn dẫn dắt tập thể theo hướng tích cực.</p>
+                    <a href="#" class="project-link">Xem thông tin</a>
+                </div>
+                <div class="project-card">
+                    <h3>Phạm Thị Kim Ngân</h3>
+                    <p>Quản lý tài chính lớp và giứ sổ đầu bài, đảm bảo minh bạch và hiệu quả trong việc chi tiêu cho các hoạt động.</p>
+                    <a href="#" class="project-link">Xem thông tin</a>
+                </div>
+                <div class="project-card">
+                    <h3>Phan Đình Bảo Duy</h3>
+                    <p>Phụ trách các hoạt động vệ sinh của lớp, tạo môi trường sạch sẽ.</p>
+                    <a href="#" class="project-link">Xem thông tin</a>
+                </div>
+                <div class="project-card">
+                    <h3>Phan Thị Phương Anh</h3>
+                    <p>Là bí thư cảu lớp phụ trách các hoạt động đoàn thể, tổ chức các phong trào thanh niên trong lớp.</p>
+                    <a href="#" class="project-link">Xem thông tin</a>
+                </div>
+                <div class="project-card">
+                    <h3>....Quỳnh Anh</h3>
+                    <p>Là lớp phó học tập, là một trong những người học suất sắc nhất lớp và có nhiều đóng góp trong học tập.</p>
+                    <a href="#" class="project-link">Xem thông tin</a>
+                </div>
+                <div class="project-card">
+                    <h3>Các tổ trưởng của lớp</h3>
+                    <p>có 4 tổi: Tổ 1 - Bá Quang.
+                    Tổ 2 - Nguyễn Ngân.
+                    Tổ 3 - Nhật Linh.
+                    Tổ 4 - Vĩnh Quang.
+                    </p>
+                    <a href="#" class="project-link">Xem thông tin</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>Hoạt Động Nổi Bật</h2>
+            <p>Các hoạt động và thành tích của lớp A1K50</p>
+            <div class="skills-grid">
+                <div class="skill-card">Học tập</div>
+                <div class="skill-card">Thể thao</div>
+                <div class="skill-card">Văn nghệ</div>
+                <div class="skill-card">Tình nguyện</div>
+                <div class="skill-card">Dã ngoại</div>
+                <div class="skill-card">Teamwork</div>
+                <div class="skill-card">Sự kiện</div>
+                <div class="skill-card">Đoàn kết</div>
+            </div>
+        </section>
+<!-- 
+        <section id="contact" class="contact">
+            <h2>Liên Hệ</h2>
+            <p>Bạn có câu hỏi hoặc muốn tìm hiểu thêm về lớp A1K50? Hãy liên hệ với chúng mình nhé!</p>
+            <div class="contact-links">
+                <a href="mailto:[email protected]" class="contact-btn">Email</a>
+                <a href="https://facebook.com/a1k50" class="contact-btn" target="_blank">Facebook</a>
+                <a href="https://zalo.me/g/a1k50" class="contact-btn" target="_blank">Zalo</a>
+                <a href="#" class="contact-btn">Discord</a>
+            </div>
+        </section> -->
+    </div>
+
+    <footer>
+        <p>&copy; V.Hoàng code</p>
+    </footer>
+
+    <script>
+        // Drawer functionality
+        const drawerToggle = document.getElementById('drawerToggle');
+        const drawerClose = document.getElementById('drawerClose');
+        const drawer = document.getElementById('drawer');
+        const drawerOverlay = document.getElementById('drawerOverlay');
+        const searchInput = document.getElementById('searchInput');
+
+        function openDrawer() {
+            drawer.classList.add('active');
+            drawerOverlay.classList.add('active');
+        }
+
+        function closeDrawer() {
+            drawer.classList.remove('active');
+            drawerOverlay.classList.remove('active');
+        }
+
+        drawerToggle.addEventListener('click', openDrawer);
+        drawerClose.addEventListener('click', closeDrawer);
+        drawerOverlay.addEventListener('click', closeDrawer);
+
+        // Close drawer when clicking nav links
+        document.querySelectorAll('.drawer-nav a').forEach(link => {
+            link.addEventListener('click', closeDrawer);
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const navLinks = document.querySelectorAll('.drawer-nav a');
+            
+            navLinks.forEach(link => {
+                const text = link.textContent.toLowerCase();
+                link.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        });
+
+        // Typing animation
+        const typingText = document.querySelector('.typing-text');
+        const text = 'A1K50';
+        let index = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentText = isDeleting 
+                ? text.substring(0, index - 1)
+                : text.substring(0, index + 1);
+            
+            typingText.textContent = currentText;
+
+            if (!isDeleting && index === text.length) {
+                setTimeout(() => {
+                    isDeleting = true;
+                    type();
+                }, 2000);
+                return;
+            }
+
+            if (isDeleting && index === 0) {
+                isDeleting = false;
+                setTimeout(type, 500);
+                return;
+            }
+
+            index = isDeleting ? index - 1 : index + 1;
+            const speed = isDeleting ? 50 : 100;
+            setTimeout(type, speed);
+        }
+        setTimeout(type, 500);
+
+        // Custom cursor functionality
+        const heartCursor = document.getElementById('heartCursor');
+        let mouseX = 0;
+        let mouseY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
+        let trailDelay = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Create trail effects with delay
+            trailDelay++;
+            if (trailDelay % 2 === 0) {
+                createCursorTrail(mouseX, mouseY);
+            }
+            
+            if (trailDelay % 5 === 0) {
+                createSparkleEffect(mouseX, mouseY);
+            }
+            
+            if (trailDelay % 10 === 0) {
+                createMagicTrail(mouseX, mouseY);
+            }
+        });
+
+        function animateCursor() {
+            // Smooth cursor movement
+            cursorX += (mouseX - cursorX) * 0.2;
+            cursorY += (mouseY - cursorY) * 0.2;
+            
+            heartCursor.style.left = cursorX + 'px';
+            heartCursor.style.top = cursorY + 'px';
+            
+            // Change cursor size based on speed
+            const speed = Math.sqrt(Math.pow(mouseX - cursorX, 2) + Math.pow(mouseY - cursorY, 2));
+            const scale = 1 + Math.min(speed * 0.002, 0.3);
+            heartCursor.style.transform = `translate(-50%, -50%) scale(${scale})`;
+            
+            requestAnimationFrame(animateCursor);
+        }
+
+        function createCursorTrail(x, y) {
+            const trail = document.createElement('div');
+            trail.classList.add('cursor-trail');
+            
+            // Random color
+            const colors = [
+                'radial-gradient(circle, #ff4757 0%, transparent 70%)',
+                'radial-gradient(circle, #2ed573 0%, transparent 70%)',
+                'radial-gradient(circle, #1e90ff 0%, transparent 70%)',
+                'radial-gradient(circle, #ffa502 0%, transparent 70%)',
+                'radial-gradient(circle, #9b59b6 0%, transparent 70%)'
+            ];
+            
+            trail.style.background = colors[Math.floor(Math.random() * colors.length)];
+            trail.style.left = x + 'px';
+            trail.style.top = y + 'px';
+            trail.style.width = Math.random() * 15 + 10 + 'px';
+            trail.style.height = trail.style.width;
+            
+            document.body.appendChild(trail);
+            
+            setTimeout(() => {
+                if (trail.parentNode) {
+                    trail.remove();
+                }
+            }, 600);
+        }
+
+        function createSparkleEffect(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            
+            const sparkles = ['✨', '⭐', '🌟', '💫', '☄️', '⚡', '❄️', '🌸'];
+            sparkle.innerHTML = sparkles[Math.floor(Math.random() * sparkles.length)];
+            
+            // Random color
+            const colors = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502', '#9b59b6', '#ff6b81'];
+            sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.fontSize = Math.random() * 12 + 10 + 'px';
+            sparkle.style.animationDuration = Math.random() * 0.5 + 0.8 + 's';
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                if (sparkle.parentNode) {
+                    sparkle.remove();
+                }
+            }, 1000);
+        }
+
+        function createMagicTrail(x, y) {
+            const magic = document.createElement('div');
+            magic.classList.add('magic-trail');
+            
+            magic.style.left = x + 'px';
+            magic.style.top = y + 'px';
+            magic.style.width = Math.random() * 20 + 15 + 'px';
+            magic.style.height = magic.style.width;
+            magic.style.animationDuration = Math.random() * 0.5 + 0.8 + 's';
+            
+            document.body.appendChild(magic);
+            
+            setTimeout(() => {
+                if (magic.parentNode) {
+                    magic.remove();
+                }
+            }, 1000);
+        }
+
+        // Create particle explosion on click
+        document.addEventListener('click', (e) => {
+            createParticleExplosion(e.clientX, e.clientY);
+            createHeartRainbow(e.clientX, e.clientY);
+        });
+
+        function createParticleExplosion(x, y) {
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const angle = (i / particleCount) * Math.PI * 2;
+                const distance = Math.random() * 80 + 40;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                
+                // Random color
+                const colors = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502', '#9b59b6', '#ff6b81', '#ff9ff3', '#54a0ff'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.remove();
+                    }
+                }, 1000);
+            }
+        }
+
+        function createHeartRainbow(x, y) {
+            const hearts = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🤎', '🖤'];
+            
+            hearts.forEach((heart, index) => {
+                setTimeout(() => {
+                    const heartEl = document.createElement('div');
+                    heartEl.classList.add('sparkle');
+                    heartEl.innerHTML = heart;
+                    heartEl.style.fontSize = '24px';
+                    heartEl.style.left = (x + (index - hearts.length/2) * 20) + 'px';
+                    heartEl.style.top = y + 'px';
+                    
+                    document.body.appendChild(heartEl);
+                    
+                    setTimeout(() => {
+                        if (heartEl.parentNode) {
+                            heartEl.remove();
+                        }
+                    }, 1000);
+                }, index * 50);
+            });
+        }
+
+        // Special effects for hover
+        document.querySelectorAll('a, button, .project-card, .skill-card').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                heartCursor.style.filter = 'drop-shadow(0 0 15px rgba(255, 105, 180, 1)) brightness(1.5)';
+                heartCursor.style.transform = 'translate(-50%, -50%) scale(1.3)';
+                createSparkleEffect(mouseX, mouseY);
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                heartCursor.style.filter = 'drop-shadow(0 0 10px rgba(255, 105, 180, 0.8))';
+                heartCursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+        });
+
+        // Start cursor animation
+        animateCursor();
+
+        // Intersection Observer for animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.project-card, .skill-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Snowflake and stars effects
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.innerHTML = '🌟';
+            snowflake.style.left = Math.random() * window.innerWidth + 'px';
+            snowflake.style.fontSize = (Math.random() * 0.8 + 0.3) + 'em';
+            snowflake.style.animationDuration = (Math.random() * 5 + 8) + 's';
+            snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 13000);
+        }
+
+        function createStars() {
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 60 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.body.appendChild(star);
+            }
+        }
+
+        // Initialize effects
+        createStars();
+        setInterval(createSnowflake, 300);
+        for (let i = 0; i < 20; i++) {
+            setTimeout(createSnowflake, i * 150);
+        }
+    </script>
+</body>
+</html>
