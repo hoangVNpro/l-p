@@ -19,7 +19,7 @@
             line-height: 1.6;
             overflow-x: hidden;
             position: relative;
-            cursor: none !important; /* Ẩn con trỏ mặc định */
+            cursor: none !important; 
         }
 
         body::before {
@@ -79,8 +79,6 @@
             50% { transform: translate(-50%, -50%) scale(1); }
             75% { transform: translate(-50%, -50%) scale(1.05); }
         }
-
-        /* Cursor trail effects */
         .cursor-trail {
             position: fixed;
             width: 20px;
@@ -104,8 +102,6 @@
                 transform: translate(-50%, -50%) scale(0);
             }
         }
-
-        /* Sparkle effect */
         .sparkle {
             position: fixed;
             pointer-events: none;
@@ -125,8 +121,6 @@
                 transform: translate(calc(-50% + 50px), calc(-50% - 100px)) scale(0.2) rotate(180deg);
             }
         }
-
-        /* Particle effect */
         .particle {
             position: fixed;
             width: 6px;
@@ -152,7 +146,6 @@
             }
         }
 
-        /* Magic trail effect */
         .magic-trail {
             position: fixed;
             width: 30px;
@@ -218,8 +211,6 @@
             0%, 100% { opacity: 0.3; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.5); }
         }
-
-        /* Drawer Styles */
         .drawer-toggle {
             position: fixed;
             left: 20px;
@@ -719,16 +710,9 @@
 </head>
 
 <body>
-    <!-- Custom Heart Cursor -->
     <div class="heart-cursor" id="heartCursor"></div>
-
-    <!-- Drawer Toggle Button -->
     <button class="drawer-toggle" id="drawerToggle">☰</button>
-
-    <!-- Drawer Overlay -->
     <div class="drawer-overlay" id="drawerOverlay"></div>
-
-    <!-- Drawer -->
     <div class="drawer" id="drawer">
         <div class="drawer-header">
             <button class="drawer-close" id="drawerClose">✕</button>
@@ -739,30 +723,6 @@
         <div class="search-box">
             <input type="text" class="search-input" id="searchInput" placeholder="Tìm kiếm...">
         </div>
-
-        <!-- <nav class="drawer-nav">
-            <a href="#about">Về Lớp</a>
-            <a href="#projects">Ban Cán Sự</a>
-            <a href="#skills">Hoạt Động</a>
-            <a href="#contact">Liên Hệ</a>
-        </nav>
-
-        <div class="drawer-divider"></div>
-
-        <div class="drawer-section">
-            <h3>📚 Thông Tin Lớp</h3>
-            <div class="drawer-item" onclick="alert('Chuyên đề học: Phát triển bản thân')">Chuyên đề học</div>
-            <div class="drawer-item" onclick="alert('Thời khóa biểu: T2-T6 hàng tuần')">Thời khóa biểu</div>
-            <div class="drawer-item" onclick="alert('Địa điểm: Trường THPT A1K50')">Địa điểm học</div>
-        </div>
-
-        <div class="drawer-section">
-            <h3>👥 Số Thành Viên</h3>
-            <div class="drawer-item">
-                <strong>Tổng: 50 học sinh</strong>
-            </div>
-            <div class="drawer-item">Nam: 25 | Nữ: 25</div>
-        </div> -->
 
         <div class="drawer-divider"></div>
 
@@ -847,17 +807,6 @@
                 <div class="skill-card">Đoàn kết</div>
             </div>
         </section>
-<!-- 
-        <section id="contact" class="contact">
-            <h2>Liên Hệ</h2>
-            <p>Bạn có câu hỏi hoặc muốn tìm hiểu thêm về lớp A1K50? Hãy liên hệ với chúng mình nhé!</p>
-            <div class="contact-links">
-                <a href="mailto:[email protected]" class="contact-btn">Email</a>
-                <a href="https://facebook.com/a1k50" class="contact-btn" target="_blank">Facebook</a>
-                <a href="https://zalo.me/g/a1k50" class="contact-btn" target="_blank">Zalo</a>
-                <a href="#" class="contact-btn">Discord</a>
-            </div>
-        </section> -->
     </div>
 
     <footer>
@@ -865,7 +814,6 @@
     </footer>
 
     <script>
-        // Drawer functionality
         const drawerToggle = document.getElementById('drawerToggle');
         const drawerClose = document.getElementById('drawerClose');
         const drawer = document.getElementById('drawer');
@@ -886,12 +834,10 @@
         drawerClose.addEventListener('click', closeDrawer);
         drawerOverlay.addEventListener('click', closeDrawer);
 
-        // Close drawer when clicking nav links
         document.querySelectorAll('.drawer-nav a').forEach(link => {
             link.addEventListener('click', closeDrawer);
         });
 
-        // Search functionality
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase();
             const navLinks = document.querySelectorAll('.drawer-nav a');
@@ -902,7 +848,6 @@
             });
         });
 
-        // Typing animation
         const typingText = document.querySelector('.typing-text');
         const text = 'A1K50';
         let index = 0;
@@ -935,7 +880,6 @@
         }
         setTimeout(type, 500);
 
-        // Custom cursor functionality
         const heartCursor = document.getElementById('heartCursor');
         let mouseX = 0;
         let mouseY = 0;
@@ -946,8 +890,6 @@
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
-            
-            // Create trail effects with delay
             trailDelay++;
             if (trailDelay % 2 === 0) {
                 createCursorTrail(mouseX, mouseY);
@@ -963,14 +905,11 @@
         });
 
         function animateCursor() {
-            // Smooth cursor movement
             cursorX += (mouseX - cursorX) * 0.2;
             cursorY += (mouseY - cursorY) * 0.2;
             
             heartCursor.style.left = cursorX + 'px';
             heartCursor.style.top = cursorY + 'px';
-            
-            // Change cursor size based on speed
             const speed = Math.sqrt(Math.pow(mouseX - cursorX, 2) + Math.pow(mouseY - cursorY, 2));
             const scale = 1 + Math.min(speed * 0.002, 0.3);
             heartCursor.style.transform = `translate(-50%, -50%) scale(${scale})`;
@@ -981,8 +920,6 @@
         function createCursorTrail(x, y) {
             const trail = document.createElement('div');
             trail.classList.add('cursor-trail');
-            
-            // Random color
             const colors = [
                 'radial-gradient(circle, #ff4757 0%, transparent 70%)',
                 'radial-gradient(circle, #2ed573 0%, transparent 70%)',
@@ -1049,8 +986,6 @@
                 }
             }, 1000);
         }
-
-        // Create particle explosion on click
         document.addEventListener('click', (e) => {
             createParticleExplosion(e.clientX, e.clientY);
             createHeartRainbow(e.clientX, e.clientY);
@@ -1070,8 +1005,6 @@
                 
                 particle.style.setProperty('--tx', `${tx}px`);
                 particle.style.setProperty('--ty', `${ty}px`);
-                
-                // Random color
                 const colors = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502', '#9b59b6', '#ff6b81', '#ff9ff3', '#54a0ff'];
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
                 
@@ -1111,7 +1044,6 @@
             });
         }
 
-        // Special effects for hover
         document.querySelectorAll('a, button, .project-card, .skill-card').forEach(element => {
             element.addEventListener('mouseenter', () => {
                 heartCursor.style.filter = 'drop-shadow(0 0 15px rgba(255, 105, 180, 1)) brightness(1.5)';
@@ -1124,11 +1056,7 @@
                 heartCursor.style.transform = 'translate(-50%, -50%) scale(1)';
             });
         });
-
-        // Start cursor animation
         animateCursor();
-
-        // Intersection Observer for animation
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1149,8 +1077,6 @@
             el.style.transition = 'all 0.6s ease-out';
             observer.observe(el);
         });
-
-        // Snowflake and stars effects
         function createSnowflake() {
             const snowflake = document.createElement('div');
             snowflake.classList.add('snowflake');
@@ -1177,8 +1103,6 @@
                 document.body.appendChild(star);
             }
         }
-
-        // Initialize effects
         createStars();
         setInterval(createSnowflake, 300);
         for (let i = 0; i < 20; i++) {
